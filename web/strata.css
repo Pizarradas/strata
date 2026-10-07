@@ -1,0 +1,878 @@
+/* STRATA 1 — landing de lanzamiento sobre SYX, tema propio «strata».
+   Dirección: minimalismo técnico japonés. Papel, tinta y un acento bermellón;
+   filetes finos, cifras en monoespaciada y mucho vacío.
+   CSS del proyecto: prefijo strata-, capa syx.app, tokens que leen roles semánticos. */
+@layer syx.reset, syx.base, syx.tokens, syx.atoms, syx.molecules, syx.organisms, syx.app, syx.utilities;
+
+/* Tokens del proyecto: leen roles de SYX. Longitudes y pesos literales solo aquí; colores nunca. */
+:root {
+  /* Color: tinta, papel y un solo acento */
+  --strata-page-bg: var(--semantic-color-bg-primary);
+  --strata-ink: var(--semantic-color-text-primary);
+  --strata-ink-soft: var(--semantic-color-text-secondary);
+  --strata-ink-faint: var(--semantic-color-text-tertiary);
+  --strata-accent: var(--semantic-color-secondary);
+  --strata-accent-text: var(--semantic-color-secondary-text);
+  --strata-on-accent: var(--semantic-color-on-secondary);
+  --strata-rule-color: var(--semantic-color-border-default);
+  --strata-rule-strong: var(--semantic-color-text-primary);
+  --strata-dot: var(--semantic-color-border-subtle);
+
+  /* Las tres tintas del marco */
+  --strata-c-sumi: var(--semantic-color-text-primary);
+  --strata-c-ai: var(--semantic-color-tertiary);
+  --strata-c-shu: var(--semantic-color-secondary);
+
+  /* Materiales del acabado: colores fijos, iguales en claro y en oscuro (es la pieza física) */
+  --strata-finish-sumi: color-mix(in oklch, var(--semantic-color-ink-dark), var(--semantic-color-ink-light) 18%);
+  --strata-finish-ai: color-mix(in oklch, var(--semantic-color-tertiary), var(--semantic-color-ink-dark) 10%);
+  --strata-finish-shu: var(--semantic-color-secondary);
+  --strata-glass: color-mix(in oklch, var(--semantic-color-ink-dark), var(--semantic-color-ink-light) 6%);
+  --strata-glass-line: color-mix(in oklch, var(--semantic-color-ink-dark), var(--semantic-color-ink-light) 30%);
+  --strata-part: color-mix(in oklch, var(--semantic-color-ink-dark), var(--semantic-color-ink-light) 55%);
+  --strata-shade-light: 22%;
+  --strata-shade-dark: 30%;
+  --strata-shade-edge: 45%;
+  --strata-glass-see-through: 0.84;
+  --strata-finish-gap: 34px;          /* separación entre capas al despiezar en el selector de acabados */
+  --strata-finish-center: 3;          /* capa central (de 0 a 6): el despiece se abre desde ella */
+  --strata-finish-move: 560ms;        /* lo que tarda cada capa en salir o volver (strata.js lo lee) */
+  --strata-finish-stagger: 80ms;      /* desfase entre capas */
+  --strata-finish-hold: 260ms;        /* pausa con el esqueleto despiezado antes de volver a montar */
+  --strata-finish-fill: 700ms;
+  --strata-spec-figure-h: 22rem;
+  --strata-spec-lift: 34px;           /* lo que sube la capa señalada en la ficha (las de encima, el doble) */
+  --strata-dim: 0.35;
+  --strata-trace-time: 700ms;         /* lo que tarda un filete en trazarse */
+  --strata-trace-step: 70ms;          /* desfase entre los elementos que aparecen tras el filete */
+  --strata-count-time: 1100ms;        /* duración del recuento de cifras (strata.js lo lee) */        /* lo que tarda una capa en llenarse de color (o vaciarse) */
+
+  /* Tipografía */
+  --strata-sans: var(--semantic-font-family-primary);
+  --strata-mono: var(--semantic-font-family-mono);
+  --strata-w-thin: 200;
+  --strata-w-light: 300;
+  --strata-w-medium: var(--semantic-font-weight-medium);
+  --strata-hero-size: clamp(4.25rem, 19vw, 16rem);
+  --strata-model-size: 0.32em;
+  --strata-display-lg: clamp(2.5rem, 6vw, 5rem);
+  --strata-display-md: clamp(1.9rem, 3.4vw, 3rem);
+  --strata-figure-size: clamp(2rem, 3.6vw, 3.25rem);
+  --strata-counter-size: clamp(3.5rem, 7vw, 6rem);
+  --strata-tracking-display: -0.03em;
+  --strata-tracking-hero: -0.045em;
+  --strata-tracking-label: 0.16em;
+  --strata-tracking-vertical: 0.5em;
+  --strata-leading-display: 1.05;
+  --strata-leading-tight: 0.9;
+  --strata-caption: var(--semantic-font-size-caption);
+  --strata-lead-size: var(--semantic-font-size-body-large);
+  --strata-measure: 44ch;
+  --strata-spec-min: 9rem;
+
+  /* Sello y marcas de registro */
+  --strata-seal-size: 3.5rem;
+  --strata-seal-size-sm: 1.5rem;
+  --strata-seal-glyph: 2rem;
+  --strata-seal-glyph-sm: 0.875rem;
+  --strata-hairline: 1px;
+  --strata-mark: 14px;
+  --strata-dot-size: 1px;
+  --strata-dot-step: 24px;
+  --strata-frame-pad: var(--semantic-space-component-lg);
+
+  /* Dibujo de línea */
+  --strata-line: var(--semantic-color-text-primary);
+  --strata-line-detail: var(--semantic-color-text-tertiary);
+  --strata-line-active: var(--semantic-color-secondary);
+  --strata-line-width: 1px;
+  --strata-line-width-detail: 0.6px;
+  --strata-phone-max: 44rem;
+  --strata-phone-max-block: calc(100vh - 10rem);
+  --strata-phone-max-sm: 44svh;
+
+  /* Ritmo */
+  --strata-section-pad: var(--semantic-space-layout-xxl);
+  --strata-pad-compact: var(--semantic-space-layout-sm);
+  --strata-stack: var(--semantic-space-stack-md);
+  --strata-stack-sm: var(--semantic-space-stack-xs);
+  --strata-stack-lg: var(--semantic-space-stack-xl);
+  --strata-inline: var(--semantic-space-inline-sm);
+  --strata-inline-lg: var(--semantic-space-inline-lg);
+  --strata-swatch: 1.25rem;
+  --strata-orbit-scroll: 420vh;
+  --strata-orbit-h: min(calc(100vh - 14rem), 44rem);
+  --strata-orbit-h-sm: 40svh;
+  --strata-orbit-angle-size: clamp(3rem, 5.5vw, 5rem);
+  --strata-piece-shift: 6px;
+  --strata-piece-label: 6.5rem;
+  --strata-piece-row-pad: 0.375rem;
+
+  /* Movimiento */
+  --strata-duration: var(--semantic-duration-base);
+  --strata-duration-slow: var(--semantic-duration-slow);
+  --strata-easing: var(--semantic-easing-standard);
+  --strata-easing-out: var(--semantic-easing-out);
+}
+
+@layer syx.app {
+  body {
+    background: var(--strata-page-bg);
+  }
+
+  /* ── Pila vertical del proyecto ──────────────────────────────────────── */
+  /* syx-reuse: checked layout-cluster (horizontal), syx-gap-* (sin alineación al inicio) — hace falta una pila alineada al inicio */
+  .strata-stack {
+    display: grid;
+    justify-items: start;
+    align-content: start;
+    gap: var(--strata-stack);
+    min-inline-size: 0;
+  }
+
+  /* ── Filete que se traza ─────────────────────────────────────────────── */
+  /* syx-reuse: checked syx-border-* (borde estático) — el filete superior se dibuja de izquierda a derecha al entrar en pantalla */
+  .strata-kicker,
+  .strata-specs,
+  .strata-fact {
+    background: linear-gradient(var(--strata-trazo-color), var(--strata-trazo-color)) left top / 100% var(--strata-hairline) no-repeat;
+  }
+  /* strata.js marca con [data-trazo] lo que aún no se ha visto; sin JS todo se ve completo */
+  [data-trazo] {
+    background-size: 0% var(--strata-hairline);
+    transition: background-size var(--strata-trace-time) var(--strata-easing-out);
+  }
+  [data-trazo] > * {
+    opacity: 0;
+    transform: translateY(var(--strata-piece-shift));
+    transition: opacity var(--strata-duration) var(--strata-easing), transform var(--strata-duration) var(--strata-easing-out);
+  }
+  [data-trazo].is-trazado { background-size: 100% var(--strata-hairline); }
+  [data-trazo].is-trazado > * {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(var(--strata-trace-time) * 0.5 + var(--strata-trace-step) * var(--strata-i, 0));
+  }
+  [data-trazo] > :nth-child(2) { --strata-i: 1; }
+  [data-trazo] > :nth-child(3) { --strata-i: 2; }
+  [data-trazo] > :nth-child(4) { --strata-i: 3; }
+  [data-trazo] > :nth-child(n + 5) { --strata-i: 4; }
+
+  /* ── Rótulo de sección: índice, kanji y nombre sobre un filete ───────── */
+  /* syx-reuse: checked atom-label, atom-pill — el rótulo bilingüe con índice y filete no existe */
+  .strata-kicker {
+    justify-self: stretch;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--strata-inline-lg);
+    margin: 0;
+    padding-block-start: var(--strata-stack-sm);
+    --strata-trazo-color: var(--strata-rule-strong);
+    font-family: var(--strata-mono);
+    font-size: var(--strata-caption);
+    letter-spacing: var(--strata-tracking-label);
+    text-transform: uppercase;
+    color: var(--strata-ink-soft);
+  }
+  .strata-kicker__index { color: var(--strata-accent-text); }
+
+  /* ── Titulares ───────────────────────────────────────────────────────── */
+  /* syx-reuse: checked atom-title (peso de titular del tema) — la marca titula en peso fino */
+  .strata-display {
+    margin: 0;
+    font-family: var(--strata-sans);
+    font-weight: var(--strata-w-light);
+    letter-spacing: var(--strata-tracking-display);
+    line-height: var(--strata-leading-display);
+    text-wrap: balance;
+  }
+  .strata-display--md { font-size: var(--strata-display-md); }
+  .strata-display--lg { font-size: var(--strata-display-lg); }
+
+  /* ── 1 · Lanzamiento ─────────────────────────────────────────────────── */
+  /* syx-reuse: checked layout-grid, mol-card — portada tipográfica con sello y texto vertical */
+  .strata-launch {
+    padding-block: var(--strata-pad-compact) var(--strata-section-pad);
+  }
+  .strata-launch__inner {
+    display: grid;
+    gap: var(--strata-stack-lg);
+    min-inline-size: 0;
+  }
+  .strata-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--strata-inline-lg);
+    padding-block: var(--strata-stack-sm);
+    border-block-end: var(--strata-hairline) solid var(--strata-rule-color);
+    font-family: var(--strata-mono);
+    font-size: var(--strata-caption);
+    letter-spacing: var(--strata-tracking-label);
+    text-transform: uppercase;
+    color: var(--strata-ink-soft);
+  }
+  .strata-launch__main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: var(--strata-inline-lg);
+  }
+  .strata-launch__title {
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    font-family: var(--strata-sans);
+    font-weight: var(--strata-w-thin);
+    font-size: var(--strata-hero-size);
+    letter-spacing: var(--strata-tracking-hero);
+    line-height: var(--strata-leading-tight);
+    white-space: nowrap;
+    min-inline-size: 0;
+  }
+  .strata-launch__model {
+    font-family: var(--strata-mono);
+    font-weight: var(--strata-w-light);
+    font-size: var(--strata-model-size);
+    letter-spacing: 0;
+    color: var(--strata-accent-text);
+  }
+  .strata-launch__side {
+    display: grid;
+    justify-items: center;
+    gap: var(--strata-stack);
+  }
+  .strata-launch__row {
+    display: grid;
+    gap: var(--strata-stack);
+    align-items: end;
+  }
+  .strata-launch__lead {
+    margin: 0;
+    max-inline-size: var(--strata-measure);
+    font-size: var(--strata-lead-size);
+    font-weight: var(--strata-w-light);
+    line-height: var(--semantic-line-height-relaxed);
+    color: var(--strata-ink-soft);
+  }
+
+  @media (min-width: 64em) {
+    .strata-launch__row { grid-template-columns: minmax(0, 1fr) auto; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .strata-launch__title {
+      animation: strata-revelar var(--strata-duration-slow) var(--strata-easing-out) both;
+    }
+    .strata-seal {
+      animation: strata-estampar var(--strata-duration-slow) var(--strata-easing-out) both;
+      animation-delay: var(--strata-duration);
+    }
+  }
+  /* El nombre sube desde la línea base; el sello se estampa después. */
+  @keyframes strata-revelar {
+    from { clip-path: inset(100% 0 0 0); transform: translateY(0.12em); }
+    to { clip-path: inset(0 0 0 0); transform: none; }
+  }
+  @keyframes strata-estampar {
+    from { opacity: 0; transform: scale(1.25); }
+  }
+
+  /* Sello (hanko) con el kanji 層, «estrato» */
+  /* syx-reuse: checked atom-badge, atom-avatar — un sello cuadrado de un solo carácter no existe */
+  .strata-seal {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--strata-seal-size);
+    block-size: var(--strata-seal-size);
+    background: var(--strata-accent);
+    color: var(--strata-on-accent);
+    font-family: var(--strata-sans);
+    font-weight: var(--strata-w-medium);
+    font-size: var(--strata-seal-glyph);
+    line-height: 1;
+  }
+  .strata-seal--sm {
+    inline-size: var(--strata-seal-size-sm);
+    block-size: var(--strata-seal-size-sm);
+    font-size: var(--strata-seal-glyph-sm);
+  }
+
+  /* Katakana en vertical, como en la señalética japonesa */
+  /* syx-reuse: checked atom-txt — SYX no tiene escritura vertical */
+  .strata-vertical {
+    writing-mode: vertical-rl;
+    font-family: var(--strata-sans);
+    font-weight: var(--strata-w-light);
+    font-size: var(--semantic-font-size-body);
+    letter-spacing: var(--strata-tracking-vertical);
+    color: var(--strata-ink-faint);
+  }
+
+  /* Cifras clave en fila, separadas por filetes */
+  /* syx-reuse: checked atom-stat (centrado y en negro) — las cifras van finas, a la izquierda y con filete */
+  .strata-specs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--strata-spec-min), 1fr));
+    margin: 0;
+    --strata-trazo-color: var(--strata-rule-strong);
+  }
+  .strata-specs__item {
+    display: grid;
+    align-content: start;
+    gap: var(--strata-stack-sm);
+    padding-block: var(--strata-stack);
+    padding-inline: 0 var(--strata-stack);
+  }
+  .strata-specs__label {
+    font-family: var(--strata-mono);
+    font-size: var(--strata-caption);
+    letter-spacing: var(--strata-tracking-label);
+    text-transform: uppercase;
+    color: var(--strata-ink-faint);
+  }
+  .strata-specs__value {
+    margin: 0;
+    font-family: var(--strata-sans);
+    font-weight: var(--strata-w-thin);
+    font-size: var(--strata-figure-size);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .strata-specs__value small,
+  .strata-fact__value small {
+    margin-inline-start: 0.15em;
+    font-family: var(--strata-mono);
+    font-size: var(--strata-caption);
+    letter-spacing: var(--strata-tracking-label);
+    color: var(--strata-ink-faint);
+  }
+
+  /* ── Marco técnico: marcas de registro y retícula de puntos ──────────── */
+  /* syx-reuse: checked mol-card (borde completo) — solo hacen falta las cuatro esquinas de corte */
+  .strata-frame {
+    margin: 0;
+    padding: var(--strata-frame-pad);
+    background:
+      linear-gradient(var(--strata-ink), var(--strata-ink)) left top / var(--strata-mark) var(--strata-hairline) no-repeat,
+      linear-gradient(var(--strata-ink), var(--strata-ink)) left top / var(--strata-hairline) var(--strata-mark) no-repeat,
+      linear-gradient(var(--strata-ink), var(--strata-ink)) right top / var(--strata-mark) var(--strata-hairline) no-repeat,
+      linear-gradient(var(--strata-ink), var(--strata-ink)) right top / var(--strata-hairline) var(--strata-mark) no-repeat,
+      linear-gradient(var(--strata-ink), var(--strata-ink)) left bottom / var(--strata-mark) var(--strata-hairline) no-repeat,
+      linear-gradient(var(--strata-ink), var(--strata-ink)) left bottom / var(--strata-hairline) var(--strata-mark) no-repeat,
+      linear-gradient(var(--strata-ink), var(--strata-ink)) right bottom / var(--strata-mark) var(--strata-hairline) no-repeat,
+      linear-gradient(var(--strata-ink), var(--strata-ink)) right bottom / var(--strata-hairline) var(--strata-mark) no-repeat,
+      radial-gradient(circle, var(--strata-dot) var(--strata-dot-size), transparent calc(var(--strata-dot-size) + 0.5px)) center / var(--strata-dot-step) var(--strata-dot-step);
+  }
+
+  /* syx-reuse: checked atom-progress (ancho intrínseco) — colocar, no pintar: la barra ocupa el ancho de la columna */
+  .strata-orbit__progress {
+    justify-self: stretch;
+  }
+
+  /* ── Teléfono isométrico (acabados) ─────────────────────────────────────────────── */
+  /* syx-reuse: checked atom-icon, atom-feature-icon — no hay ilustración isométrica de línea en SYX */
+  .strata-phone {
+    inline-size: 100%;
+    max-inline-size: var(--strata-phone-max);
+    max-block-size: var(--strata-phone-max-block);
+    block-size: auto;
+    overflow: visible;
+  }
+  .strata-phone path {
+    fill: none;
+    stroke: var(--strata-line);
+    stroke-width: var(--strata-line-width);
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+    transition: stroke var(--strata-duration) var(--strata-easing);
+  }
+  .strata-phone .strata-phone__detail {
+    stroke: var(--strata-line-detail);
+    stroke-width: var(--strata-line-width-detail);
+  }
+
+  /* ── 1 · 360°: modelo 3D de líneas ───────────────────────────────────── */
+  /* syx-reuse: checked layout-grid, syx-sticky, atom-stat — tramo de scroll con lienzo WebGL fijo y lectura del ángulo */
+  .strata-orbit {
+    position: relative;
+    block-size: var(--strata-orbit-scroll);
+  }
+  .strata-orbit__sticky {
+    position: sticky; /* deliberado: CSS plano sin mixins de posición (syx-scan lo marca como bajo) */
+    inset-block-start: 0;
+    min-block-size: 100vh;
+    display: grid;
+    align-content: center;
+    padding-block: var(--strata-pad-compact);
+  }
+  .strata-orbit__figure {
+    display: grid;
+    gap: var(--strata-stack-sm);
+  }
+  .strata-orbit__canvas {
+    inline-size: 100%;
+    block-size: var(--strata-orbit-h);
+  }
+  .strata-orbit__canvas canvas {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+  .strata-orbit__caption,
+  .strata-orbit__fallback {
+    margin: 0;
+    font-family: var(--strata-mono);
+    font-size: var(--strata-caption);
+    letter-spacing: var(--strata-tracking-label);
+    text-transform: uppercase;
+    color: var(--strata-ink-faint);
+  }
+  .strata-orbit__fallback { color: var(--strata-ink-soft); }
+  .strata-orbit.is-sin-3d .strata-orbit__canvas { display: none; }
+  .strata-orbit__angle {
+    margin: 0;
+    font-family: var(--strata-mono);
+    font-weight: var(--strata-w-thin);
+    font-size: var(--strata-orbit-angle-size);
+    line-height: 1;
+    letter-spacing: var(--strata-tracking-display);
+    font-variant-numeric: tabular-nums;
+  }
+  .strata-orbit__unit {
+    font-size: 0.5em;
+    vertical-align: top;
+    color: var(--strata-accent-text);
+  }
+  .strata-orbit__meter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--strata-inline-lg);
+    justify-self: stretch;
+  }
+  .strata-orbit__count {
+    margin: 0;
+    font-family: var(--strata-mono);
+    font-size: var(--strata-caption);
+    letter-spacing: var(--strata-tracking-label);
+    text-transform: uppercase;
+    color: var(--strata-ink-faint);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Escenario: lienzo WebGL y capa SVG de la guía apilados en la misma celda (sin posicionar) */
+  .strata-orbit__stage {
+    display: grid;
+  }
+  .strata-orbit__stage > * {
+    grid-area: 1 / 1;
+  }
+  .strata-orbit__overlay {
+    inline-size: 100%;
+    block-size: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .strata-orbit__leader {
+    fill: none;
+    stroke: var(--strata-line-active);
+    stroke-width: var(--strata-hairline);
+  }
+  .strata-orbit__dot { fill: var(--strata-line-active); }
+  .strata-orbit__tag {
+    fill: var(--strata-ink);
+    font-family: var(--strata-mono);
+    font-size: var(--strata-caption);
+    letter-spacing: 0.04em;
+  }
+  .strata-orbit__tag-index { fill: var(--strata-accent-text); }
+  .strata-orbit__overlay.is-off { opacity: 0; }
+  .strata-orbit__overlay { transition: opacity var(--strata-duration) var(--strata-easing); }
+
+  /* Fichas por pieza: todas en la misma celda, así la columna no salta al cambiar */
+  /* syx-reuse: checked mol-card, atom-table — ficha breve con nombre, peso, texto y tres datos */
+  .strata-pieces {
+    display: grid;
+    justify-self: stretch;
+  }
+  .strata-piece {
+    grid-area: 1 / 1;
+    display: grid;
+    align-content: start;
+    gap: var(--strata-stack-sm);
+    padding-block-start: var(--strata-stack-sm);
+    border-block-start: var(--strata-hairline) solid var(--strata-rule-strong);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(var(--strata-piece-shift));
+    transition: opacity var(--strata-duration) var(--strata-easing), transform var(--strata-duration) var(--strata-easing-out), visibility 0s linear var(--strata-duration);
+  }
+  .strata-piece.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: opacity var(--strata-duration) var(--strata-easing), transform var(--strata-duration) var(--strata-easing-out), visibility 0s;
+  }
+  .strata-piece__head {
+    display: flex;
+    align-items: baseline;
+    gap: var(--strata-inline);
+    margin: 0;
+  }
+  .strata-piece__index {
+    font-family: var(--strata-mono);
+    font-size: var(--strata-caption);
+    color: var(--strata-accent-text);
+  }
+  .strata-piece__name {
+    font-size: var(--strata-lead-size);
+    font-weight: var(--strata-w-medium);
+  }
+  .strata-piece__weight {
+    margin-inline-start: auto;
+    font-family: var(--strata-mono);
+    font-size: var(--strata-caption);
+    color: var(--strata-ink-faint);
+    font-variant-numeric: tabular-nums;
+  }
+  .strata-piece__text {
+    margin: 0;
+    max-inline-size: var(--strata-measure);
+    font-weight: var(--strata-w-light);
+    color: var(--strata-ink-soft);
+  }
+  .strata-piece__specs {
+    display: grid;
+    margin: 0;
+  }
+  .strata-piece__row {
+    display: grid;
+    grid-template-columns: var(--strata-piece-label) minmax(0, 1fr);
+    gap: var(--strata-inline-lg);
+    padding-block: var(--strata-piece-row-pad);
+    border-block-start: var(--strata-hairline) solid var(--strata-rule-color);
+  }
+  .strata-piece__row dt {
+    font-family: var(--strata-mono);
+    font-size: var(--strata-caption);
+    letter-spacing: var(--strata-tracking-label);
+    text-transform: uppercase;
+    color: var(--strata-ink-faint);
+    align-self: center;
+  }
+  .strata-piece__row dd {
+    margin: 0;
+    font-size: var(--semantic-font-size-body-sm);
+  }
+
+  /* ── 3 · Acabados ────────────────────────────────────────────────────── */
+  /* syx-reuse: checked atom-radio, mol-form-field-set — los radios son de SYX; la lista con muestra y descripción no existe */
+  .strata-finishes {
+    display: grid;
+    justify-self: stretch;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-block-start: var(--strata-hairline) solid var(--strata-rule-color);
+    min-inline-size: 0;
+  }
+  .strata-finishes__legend {
+    float: inline-start; /* deja la leyenda dentro del flujo del fieldset, encima de la lista */
+    inline-size: 100%;
+    margin-block-end: var(--strata-stack-sm);
+    padding: 0;
+    font-family: var(--strata-mono);
+    font-size: var(--strata-caption);
+    letter-spacing: var(--strata-tracking-label);
+    text-transform: uppercase;
+    color: var(--strata-ink-faint);
+  }
+  /* Una fila por acabado: radio y nombre · descripción · muestra; todas con los mismos bordes */
+  .strata-finish {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--strata-inline-lg);
+    padding-block: var(--strata-stack-sm);
+    border-block-end: var(--strata-hairline) solid var(--strata-rule-color);
+  }
+  .strata-finish__desc {
+    font-family: var(--strata-mono);
+    font-size: var(--strata-caption);
+    letter-spacing: var(--strata-tracking-label);
+    text-transform: uppercase;
+    color: var(--strata-ink-faint);
+    transition: color var(--strata-duration) var(--strata-easing);
+  }
+  .strata-finish:has(:checked) .strata-finish__desc { color: var(--strata-ink); }
+  .strata-swatch {
+    inline-size: var(--strata-swatch);
+    block-size: var(--strata-swatch);
+    background: var(--strata-swatch-color);
+    box-shadow: inset 0 0 0 var(--strata-hairline) var(--strata-rule-color); /* el sumi se distingue también sobre tinta */
+  }
+  .strata-swatch--sumi { --strata-swatch-color: var(--strata-finish-sumi); }
+  .strata-swatch--ai { --strata-swatch-color: var(--strata-finish-ai); }
+  .strata-swatch--shu { --strata-swatch-color: var(--strata-finish-shu); }
+
+  /* Teléfono del acabado: caras rellenas con el color elegido, no solo líneas.
+     Tres tonos por material (techo claro, cara izquierda base, cara derecha en sombra) y una arista fina.
+     Los tonos se calculan en cada capa: así una capa puede llevar ya el acabado nuevo mientras las
+     demás conservan el anterior (el cambio se hace capa a capa, al volver a montarse). */
+  .strata-finish-figure {
+    --strata-explode: 0;
+    --strata-finish: var(--strata-finish-sumi);
+    display: grid;
+    justify-items: center;
+  }
+  .strata-finish-figure[data-acabado="ai"] { --strata-finish: var(--strata-finish-ai); }
+  .strata-finish-figure[data-acabado="shu"] { --strata-finish: var(--strata-finish-shu); }
+  .strata-finish-figure .strata-phone__layer {
+    --strata-face-top: color-mix(in oklch, var(--strata-finish), var(--semantic-color-ink-light) var(--strata-shade-light));
+    --strata-face-left: var(--strata-finish);
+    --strata-face-right: color-mix(in oklch, var(--strata-finish), var(--semantic-color-ink-dark) var(--strata-shade-dark));
+    /* La arista se mezcla con el color del texto: oscurece en claro y aclara en oscuro, así el
+       teléfono sumi no se pierde sobre el fondo de tinta. */
+    --strata-line: color-mix(in oklch, var(--strata-finish), var(--semantic-color-text-primary) var(--strata-shade-edge));
+    --strata-line-detail: var(--strata-line);
+    /* Despiece simétrico desde la capa central: las de abajo bajan y las de arriba suben */
+    transform: translateY(calc((var(--strata-k) - var(--strata-finish-center)) * var(--strata-finish-gap) * var(--strata-explode, 0) * -1));
+    transition: transform var(--strata-finish-move) var(--strata-easing-out);
+  }
+  .strata-finish-figure .strata-phone__layer[data-acabado="sumi"] { --strata-finish: var(--strata-finish-sumi); }
+  .strata-finish-figure .strata-phone__layer[data-acabado="ai"] { --strata-finish: var(--strata-finish-ai); }
+  .strata-finish-figure .strata-phone__layer[data-acabado="shu"] { --strata-finish: var(--strata-finish-shu); }
+
+  /* Pantalla y cristal: vidrio negro, con el canto teñido apenas del acabado */
+  .strata-finish-figure [data-iso-part="pantalla"],
+  .strata-finish-figure [data-iso-part="cristal"] {
+    --strata-face-top: var(--strata-glass);
+    --strata-face-left: color-mix(in oklch, var(--semantic-color-ink-dark), var(--strata-finish) 30%);
+    --strata-face-right: var(--strata-glass);
+    --strata-line: var(--strata-glass-line);
+    --strata-line-detail: var(--strata-glass-line);
+  }
+  /* Piezas interiores: gris neutro (quedan tapadas por el marco, pero se ven al cambiar) */
+  .strata-finish-figure [data-iso-part="bateria"],
+  .strata-finish-figure [data-iso-part="camara"],
+  .strata-finish-figure [data-iso-part="placa"] {
+    --strata-face-top: var(--strata-part);
+    --strata-face-left: var(--strata-part);
+    --strata-face-right: var(--strata-part);
+  }
+
+  .strata-phone .strata-phone__fill {
+    fill: none;
+    stroke: none;
+  }
+  .strata-finish-figure .strata-phone__fill {
+    fill: var(--strata-face);
+    stroke: var(--strata-face);   /* tapa las juntas de antialias entre caras contiguas */
+    stroke-width: var(--strata-line-width-detail);
+    transition:
+      fill var(--strata-finish-fill) var(--strata-easing),
+      stroke var(--strata-finish-fill) var(--strata-easing),
+      fill-opacity var(--strata-finish-fill) var(--strata-easing),
+      stroke-opacity var(--strata-finish-fill) var(--strata-easing);
+  }
+  .strata-finish-figure .strata-phone__fill--top { --strata-face: var(--strata-face-top); }
+  .strata-finish-figure .strata-phone__fill--left { --strata-face: var(--strata-face-left); }
+  .strata-finish-figure .strata-phone__fill--right,
+  .strata-finish-figure .strata-phone__fill--inner { --strata-face: var(--strata-face-right); }
+  /* El cristal deja ver el borde del área activa de la pantalla que tiene debajo */
+  .strata-finish-figure [data-iso-part="cristal"] .strata-phone__fill--top { fill-opacity: var(--strata-glass-see-through); }
+  .strata-finish-figure .strata-phone path:not(.strata-phone__fill) {
+    stroke-width: var(--strata-line-width-detail);
+    transition: stroke var(--strata-finish-fill) var(--strata-easing);
+  }
+
+  /* Esqueleto: durante el cambio de acabado la capa pierde el relleno y vuelve a ser solo líneas,
+     las mismas del montaje 360°. Al montarse otra vez recupera el relleno, ya con el color nuevo. */
+  .strata-finish-figure .strata-phone__layer[data-esqueleto] {
+    --strata-line: var(--semantic-color-text-primary);
+    --strata-line-detail: var(--semantic-color-text-tertiary);
+  }
+  .strata-finish-figure .strata-phone__layer[data-esqueleto] .strata-phone__fill {
+    fill-opacity: 0;
+    stroke-opacity: 0;
+  }
+  .strata-finish-figure .strata-phone__layer[data-esqueleto] .strata-phone__edge {
+    stroke-width: var(--strata-line-width);
+  }
+
+  /* ── Secciones ───────────────────────────────────────────────────────── */
+  /* syx-reuse: checked layout-grid, syx-py-5 — las secciones necesitan el espaciado de layout xxl del tema */
+  .strata-section {
+    padding-block: var(--strata-section-pad);
+  }
+
+  /* ── 4 · Reparar: cifras con filete ──────────────────────────────────── */
+  /* syx-reuse: checked atom-stat, mol-card--flat — la cifra va fina, alineada a la izquierda y sin caja */
+  .strata-fact {
+    display: grid;
+    align-content: start;
+    gap: var(--strata-stack-sm);
+    padding-block-start: var(--strata-stack);
+    --strata-trazo-color: var(--strata-rule-color);
+  }
+  .strata-fact__index {
+    font-family: var(--strata-mono);
+    font-size: var(--strata-caption);
+    color: var(--strata-accent-text);
+  }
+  .strata-fact__value {
+    margin: 0;
+    font-weight: var(--strata-w-thin);
+    font-size: var(--strata-counter-size);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .strata-fact__label {
+    margin: 0;
+    font-size: var(--strata-lead-size);
+    font-weight: var(--strata-w-medium);
+    line-height: var(--semantic-line-height-snug);
+  }
+  .strata-fact__text {
+    margin: 0;
+    max-inline-size: var(--strata-measure);
+    font-weight: var(--strata-w-light);
+    color: var(--strata-ink-soft);
+  }
+
+  /* ── 5 · Ficha: la tabla de SYX con cabecera en monoespaciada ────────── */
+  /* syx-reuse: checked atom-table — solo se reescriben tokens existentes en su contenedor (CONSUMING.md) */
+  .strata-spec-table {
+    --component-table-th-font-family: var(--strata-mono);
+    font-variant-numeric: tabular-nums;
+  }
+  /* Fila señalada: fondo suave y la capa correspondiente se levanta en el dibujo */
+  /* syx-reuse: checked atom-table (sin estado de fila activa enlazada) — la fila es propia (tr sin clase de SYX) */
+  .strata-spec-row {
+    cursor: default;
+    transition: background-color var(--strata-duration) var(--strata-easing);
+  }
+  .strata-spec-row.is-active { background-color: var(--semantic-color-bg-secondary); }
+  .strata-spec-row:focus-visible {
+    outline: var(--semantic-focus-ring-width) var(--semantic-focus-ring-style) var(--semantic-focus-ring-color);
+    outline-offset: calc(var(--semantic-focus-ring-width) * -1);
+  }
+
+  /* Isométrico de la ficha: líneas; la capa señalada sube y las de encima suben más para dejarla ver */
+  /* syx-reuse: checked atom-icon — misma ilustración de línea que el resto de la página */
+  .strata-spec-figure {
+    display: grid;
+    justify-items: center;
+    justify-self: stretch;
+    margin: 0;
+    padding-block-start: var(--strata-stack);
+  }
+  .strata-spec-figure .strata-phone {
+    max-block-size: var(--strata-spec-figure-h);
+  }
+  .strata-spec-figure .strata-phone__layer {
+    transform: translateY(calc(var(--strata-lift, 0px) * -1));
+    transition: transform var(--strata-finish-move) var(--strata-easing-out), opacity var(--strata-duration) var(--strata-easing);
+  }
+  .strata-spec-figure.is-marcando .strata-phone__layer:not(.is-active) { opacity: var(--strata-dim); }
+  .strata-spec-figure .strata-phone__layer.is-active path { stroke: var(--strata-line-active); }
+
+  /* ── 6 · Reserva ─────────────────────────────────────────────────────── */
+  /* syx-reuse: checked atom-stat (sin unidad en mono) — la cuenta atrás necesita valor y unidad alineados */
+  .strata-countdown {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .strata-countdown__cell {
+    display: grid;
+    gap: var(--strata-stack-sm);
+    padding-inline: var(--strata-stack-lg);
+    border-inline-start: var(--strata-hairline) solid var(--strata-rule-color);
+  }
+  .strata-countdown__cell:first-child {
+    padding-inline-start: 0;
+    border-inline-start: 0;
+  }
+  .strata-countdown__value {
+    font-family: var(--strata-mono);
+    font-weight: var(--strata-w-thin);
+    font-size: var(--strata-counter-size);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .strata-countdown__unit {
+    font-family: var(--strata-mono);
+    font-size: var(--strata-caption);
+    letter-spacing: var(--strata-tracking-label);
+    text-transform: uppercase;
+    color: var(--strata-ink-faint);
+  }
+  .strata-reserve {
+    inline-size: 100%; /* colocar: el formulario ocupa su columna */
+  }
+
+  /* ── Pie ─────────────────────────────────────────────────────────────── */
+  /* syx-reuse: checked org-site-header (SYX no tiene pie) — pie con el sello y la marca espaciada */
+  .strata-footer {
+    padding-block: var(--strata-stack-lg);
+    border-block-start: var(--strata-hairline) solid var(--strata-rule-color);
+  }
+  .strata-footer__mark {
+    display: flex;
+    align-items: center;
+    gap: var(--strata-inline);
+    margin: 0;
+    font-family: var(--strata-mono);
+    font-size: var(--strata-caption);
+    letter-spacing: var(--strata-tracking-vertical);
+  }
+  .strata-footer__author {
+    font-weight: var(--strata-w-medium);
+    color: var(--strata-ink);
+  }
+  .strata-footer__note {
+    margin: 0;
+    font-size: var(--semantic-font-size-body-sm);
+    color: var(--strata-ink-faint);
+  }
+
+  /* ── Pantallas estrechas y bajas ─────────────────────────────────────── */
+  @media (max-width: 64em) {
+    .strata-phone { max-block-size: var(--strata-phone-max-sm); }
+    .strata-orbit__canvas { block-size: var(--strata-orbit-h-sm); }
+    .strata-orbit__caption,
+    .strata-orbit__angle,
+    .strata-piece__text { display: none; }
+  }
+  @media (max-width: 48em) {
+    .strata-frame { padding: var(--strata-inline); }
+    .strata-countdown__cell { padding-inline: var(--strata-stack); }
+    .strata-launch__side { gap: var(--strata-stack-sm); }
+    .strata-seal {
+      inline-size: var(--strata-seal-size-sm);
+      block-size: var(--strata-seal-size-sm);
+      font-size: var(--strata-seal-glyph-sm);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .strata-orbit { block-size: auto; }
+    .strata-orbit__sticky { position: static; min-block-size: auto; }
+    .strata-phone path,
+    .strata-finish-figure .strata-phone__layer,
+    .strata-finish-figure .strata-phone__fill { transition: none; }
+    /* Sin giro por scroll: todas las fichas a la vista, una debajo de otra */
+    .strata-pieces { gap: var(--strata-stack); }
+    .strata-piece {
+      grid-area: auto;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      transition: none;
+    }
+    .strata-orbit__overlay { display: none; }
+  }
+}

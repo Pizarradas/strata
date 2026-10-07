@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es" data-syx-theme="strata">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>STRATA 1</title>
+  <meta name="author" content="José Luis Pizarro">
+  <meta name="description" content="STRATA 1: un teléfono modular de siete capas que se abren, se reparan y se cambian por separado. Presentación el 21 de octubre.">
+  {{CABECERA}}
+</head>
+<body>
+  <a href="#contenido" class="syx-sr-only-focusable">Saltar al contenido</a>
+
+  <div class="org-site-nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+  <nav class="org-site-nav-drawer" id="nav-drawer" aria-label="Navegación móvil">
+    <a href="#giro" class="org-site-nav-drawer__link"><span class="atom-icon atom-icon--lc-layers" aria-hidden="true"></span> Capas</a>
+    <a href="#acabados" class="org-site-nav-drawer__link"><span class="atom-icon atom-icon--lc-palette" aria-hidden="true"></span> Acabados</a>
+    <a href="#ficha" class="org-site-nav-drawer__link"><span class="atom-icon atom-icon--lc-file-text" aria-hidden="true"></span> Ficha técnica</a>
+    <a href="#reservar" class="org-site-nav-drawer__link"><span class="atom-icon atom-icon--lc-rocket" aria-hidden="true"></span> Reservar</a>
+  </nav>
+
+  <header class="org-site-header" id="site-header" role="banner">
+    <a href="#contenido" class="org-site-header__brand" aria-label="STRATA, inicio">STRATA</a>
+    <nav class="org-site-header__nav" aria-label="Navegación principal">
+      <a href="#giro">Capas</a>
+      <a href="#acabados">Acabados</a>
+      <a href="#ficha">Ficha técnica</a>
+    </nav>
+    <div class="org-site-header__actions">
+      <button class="org-site-header__darkmode" id="darkmode-toggle" type="button" aria-label="Cambiar a modo oscuro">
+        <span class="atom-icon atom-icon--lc-moon" aria-hidden="true" id="icon-moon"></span>
+        <span class="atom-icon atom-icon--lc-sun" aria-hidden="true" id="icon-sun" hidden></span>
+      </button>
+      <a href="#reservar" class="atom-btn atom-btn--primary atom-btn--filled atom-btn--size-sm">Reservar</a>
+      <button class="org-site-header__burger" id="nav-burger" type="button" aria-controls="nav-drawer"
+        aria-expanded="false" aria-label="Abrir navegación">
+        <span class="org-site-header__burger-line" aria-hidden="true"></span>
+        <span class="org-site-header__burger-line" aria-hidden="true"></span>
+        <span class="org-site-header__burger-line" aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="contenido">
+
+    <!-- 1 · Lanzamiento -->
+    <section class="strata-launch" aria-labelledby="launch-titulo">
+      <div class="layout-grid">
+        <div class="strata-launch__inner layout-grid__col-xs-12">
+        <div class="strata-meta">
+          <span>N.º 001</span>
+          <span><span lang="ja">発表</span> 2026.10.21 · 19:00 CET</span>
+          <span class="strata-meta__end">Madrid</span>
+        </div>
+
+        <div class="strata-launch__main">
+          <h1 class="strata-launch__title" id="launch-titulo">
+            <span class="strata-launch__name">STRATA</span> <span class="strata-launch__model">1</span>
+          </h1>
+          <div class="strata-launch__side" aria-hidden="true">
+            <span class="strata-seal" lang="ja">層</span>
+            <span class="strata-vertical" lang="ja">ストラータ</span>
+          </div>
+        </div>
+
+        <div class="strata-launch__row">
+          <p class="strata-launch__lead">Un teléfono hecho de siete capas que se abren, se reparan y se cambian por separado. Doce tornillos. Ningún pegamento.</p>
+          <div class="layout-cluster layout-cluster--sm">
+            <a href="#reservar" class="atom-btn atom-btn--primary atom-btn--filled atom-btn--size-lg">Reservar sin coste</a>
+            <a href="#giro" class="atom-btn atom-btn--primary atom-btn--size-lg">Ver el montaje</a>
+          </div>
+        </div>
+
+        <dl class="strata-specs">
+          <div class="strata-specs__item"><dt class="strata-specs__label">Capas</dt><dd class="strata-specs__value">7</dd></div>
+          <div class="strata-specs__item"><dt class="strata-specs__label">Tornillos T5</dt><dd class="strata-specs__value">12</dd></div>
+          <div class="strata-specs__item"><dt class="strata-specs__label">Pantalla OLED</dt><dd class="strata-specs__value">6,1″</dd></div>
+          <div class="strata-specs__item"><dt class="strata-specs__label">Grosor</dt><dd class="strata-specs__value">8,4<small>mm</small></dd></div>
+          <div class="strata-specs__item"><dt class="strata-specs__label">Desde</dt><dd class="strata-specs__value">549<small>€</small></dd></div>
+        </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 · 360°: modelo 3D de líneas que se monta al girar, con la ficha de cada pieza -->
+    <section class="strata-orbit" id="giro" aria-labelledby="giro-titulo">
+      <div class="strata-orbit__sticky">
+        <div class="layout-grid layout-grid--align-center">
+          <div class="layout-grid__col-xs-12 layout-grid__col-md-5 layout-grid__col-lg-4">
+            <div class="strata-stack">
+              <p class="strata-kicker"><span class="strata-kicker__index">01</span><span lang="ja">回転</span><span>360°</span></p>
+              <h2 class="strata-display strata-display--md" id="giro-titulo">Una vuelta, pieza a pieza.</h2>
+              <div class="strata-orbit__meter" aria-hidden="true">
+                <p class="strata-orbit__angle"><span id="orbit-grados">000</span><span class="strata-orbit__unit">°</span></p>
+                <p class="strata-orbit__count"><span id="orbit-paso">00</span> / 07 capas</p>
+              </div>
+              <progress class="atom-progress strata-orbit__progress" id="orbit-progress" value="0" max="100" aria-label="Giro y montaje">0 %</progress>
+              <div class="strata-pieces" id="orbit-piezas" aria-live="polite">
+                {{PIEZAS_360}}
+              </div>
+            </div>
+          </div>
+          <figure class="strata-frame strata-orbit__figure layout-grid__col-xs-12 layout-grid__col-md-7 layout-grid__col-lg-8">
+            <div class="strata-orbit__stage">
+              <div class="strata-orbit__canvas" id="orbit-lienzo" role="img"
+                aria-label="Modelo 3D de líneas del teléfono STRATA. Al desplazar la página gira 360 grados sobre un goniómetro y sus siete capas bajan una a una hasta cerrarse; la pieza que baja se señala con su nombre."></div>
+              <svg class="strata-orbit__overlay" id="orbit-guia" aria-hidden="true">
+                <path class="strata-orbit__leader" id="orbit-guia-linea" d=""/>
+                <circle class="strata-orbit__dot" id="orbit-guia-punto" r="3" cx="-10" cy="-10"/>
+                <text class="strata-orbit__tag" id="orbit-guia-texto" text-anchor="end"><tspan class="strata-orbit__tag-index" id="orbit-guia-indice"></tspan><tspan id="orbit-guia-nombre"></tspan></text>
+              </svg>
+            </div>
+            <p class="strata-orbit__fallback" id="orbit-aviso" hidden></p>
+            <figcaption class="strata-orbit__caption">Modelo 3D · solo líneas · proyección ortográfica</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · Acabados -->
+    <section class="strata-section" id="acabados" aria-labelledby="acabados-titulo">
+      <div class="layout-grid layout-grid--align-center">
+        <div class="layout-grid__col-xs-12 layout-grid__col-md-6 layout-grid__col-lg-4">
+          <div class="strata-stack">
+            <p class="strata-kicker"><span class="strata-kicker__index">02</span><span lang="ja">仕上げ</span><span>Acabados</span></p>
+            <h2 class="strata-display strata-display--md" id="acabados-titulo">Tres tintas, un mismo esqueleto.</h2>
+            <p class="atom-txt syx-max-w-50ch">El marco se anodiza en tres colores tradicionales. Elige uno: todo lo demás se comparte y se puede cambiar.</p>
+            <fieldset class="strata-finishes">
+              <legend class="strata-finishes__legend">Color del marco</legend>
+              {{ACABADOS}}
+            </fieldset>
+          </div>
+        </div>
+        <figure class="strata-frame strata-finish-figure layout-grid__col-xs-12 layout-grid__col-md-6 layout-grid__col-lg-8" data-acabado="sumi">
+          {{SVG_ACABADO}}
+        </figure>
+      </div>
+    </section>
+
+    <!-- 4 · Reparar -->
+    <section class="strata-section" id="ventajas" aria-labelledby="ventajas-titulo">
+      <div class="layout-grid">
+        <div class="layout-grid__col-xs-12 strata-stack">
+          <p class="strata-kicker"><span class="strata-kicker__index">03</span><span lang="ja">修理</span><span>Reparar</span></p>
+          <h2 class="strata-display strata-display--md" id="ventajas-titulo">Si algo falla, cambias una capa.</h2>
+        </div>
+        {{VENTAJAS}}
+      </div>
+    </section>
+
+    <!-- 5 · Ficha técnica -->
+    <section class="strata-section" id="ficha" aria-labelledby="ficha-titulo">
+      <div class="layout-grid">
+        <div class="layout-grid__col-xs-12 layout-grid__col-lg-4 strata-stack">
+          <p class="strata-kicker"><span class="strata-kicker__index">04</span><span lang="ja">仕様</span><span>Ficha técnica</span></p>
+          <h2 class="strata-display strata-display--md" id="ficha-titulo">Capa a capa, en cifras.</h2>
+          <p class="atom-txt">Cada fila es una pieza que puedes pedir por separado. Pasa por una y mira dónde va.</p>
+          <figure class="strata-spec-figure" aria-hidden="true">
+            {{SVG_FICHA}}
+          </figure>
+        </div>
+        <div class="layout-grid__col-xs-12 layout-grid__col-lg-8">
+          <div class="atom-table__container atom-table--resp strata-spec-table" role="region" aria-label="Ficha técnica por capas" tabindex="0">
+            <table class="atom-table">
+              <thead><tr><th class="atom-table__th" scope="col">Capa</th><th class="atom-table__th" scope="col">Pieza</th><th class="atom-table__th" scope="col">Especificación</th><th class="atom-table__th" scope="col">Recambio</th></tr></thead>
+              <tbody>
+                {{FICHA}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · Reserva -->
+    <section class="strata-section strata-section--last" id="reservar" aria-labelledby="reservar-titulo">
+      <div class="layout-grid layout-grid--align-center">
+        <div class="layout-grid__col-xs-12 layout-grid__col-md-6 layout-grid__col-lg-6 strata-stack">
+          <p class="strata-kicker"><span class="strata-kicker__index">05</span><span lang="ja">予約</span><span>Reserva</span></p>
+          <h2 class="strata-display strata-display--lg" id="reservar-titulo">Reserva el tuyo.</h2>
+          <p class="atom-txt syx-max-w-50ch">Sin coste y sin compromiso. Te avisamos el día de la presentación y eliges acabado entonces. Primeras unidades en primavera de 2027.</p>
+          <div class="strata-countdown" aria-label="Cuenta atrás hasta la presentación">
+            <div class="strata-countdown__cell"><span class="strata-countdown__value" id="cd-dias">14</span><span class="strata-countdown__unit">días</span></div>
+            <div class="strata-countdown__cell"><span class="strata-countdown__value" id="cd-horas">04</span><span class="strata-countdown__unit">horas</span></div>
+            <div class="strata-countdown__cell"><span class="strata-countdown__value" id="cd-min">35</span><span class="strata-countdown__unit">min</span></div>
+          </div>
+        </div>
+        <div class="layout-grid__col-xs-12 layout-grid__col-md-6 layout-grid__col-lg-5">
+          <form class="strata-reserve mol-card" id="strata-reserva" novalidate>
+            <div class="mol-card__body strata-stack">
+              <h3 class="mol-card__title">Tu reserva</h3>
+              <div class="mol-form-field" id="ff-email-campo">
+                <label class="atom-label" for="ff-email">Correo electrónico</label>
+                <input class="atom-input" id="ff-email" name="email" type="email" autocomplete="email" required aria-describedby="ff-email-msg">
+                <span class="mol-form-field__msg" id="ff-email-msg">Solo para avisarte del lanzamiento.</span>
+              </div>
+              <label class="atom-check"><input class="atom-check__input" type="checkbox" name="novedades" id="ff-novedades"><span class="atom-check__label">Quiero recibir las guías de reparación</span></label>
+              <button class="atom-btn atom-btn--secondary atom-btn--filled atom-btn--size-lg" type="submit">Reservar sin coste</button>
+              <div class="mol-alert mol-alert--success" role="status" id="strata-reserva-ok" hidden>
+                <p class="mol-alert__title">Reserva hecha</p>
+                <p class="mol-alert__body">Te escribiremos el 21 de octubre. Esto es una demostración: no se ha enviado nada.</p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="strata-footer" role="contentinfo">
+    <div class="layout-grid">
+      <p class="strata-footer__mark layout-grid__col-xs-12 layout-grid__col-md-6"><span class="strata-seal strata-seal--sm" lang="ja" aria-hidden="true">層</span> STRATA</p>
+      <p class="atom-txt strata-footer__note layout-grid__col-xs-12 layout-grid__col-md-6">Diseñado por <strong class="strata-footer__author">José Luis Pizarro</strong>. STRATA es un producto ficticio; página construida sobre SYX con el tema propio «strata».</p>
+    </div>
+  </footer>
+
+  {{SCRIPTS}}
+</body>
+</html>

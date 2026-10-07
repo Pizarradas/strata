@@ -1,0 +1,56 @@
+From 3c247aa378b6f7c2a7e1cf2d3458cb2ad0bcba07 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Wed, 7 Oct 2026 16:02:28 +0200
+Subject: [PATCH 4/4] =?UTF-8?q?atom-radio:=20centrar=20el=20punto=20interi?=
+ =?UTF-8?q?or=20para=20cualquier=20tama=C3=B1o?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+El punto se colocaba a círculo/4 desde la izquierda, que solo centra si el
+punto mide la mitad del círculo. Con los tokens por defecto (24 px y 8 px)
+quedaba 2 px a la izquierda en todos los temas. Ahora: (círculo − punto) / 2.
+Los CSS compilados de los demás temas se regeneran con node scripts/build-css.js.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01KVKf7Pb5wg9zJBSSZs4GgL
+---
+ css/styles-theme-strata.css | 2 +-
+ scss/atoms/_radio.scss      | 6 ++++--
+ 2 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/css/styles-theme-strata.css b/css/styles-theme-strata.css
+index a457e89..00ec447 100644
+--- a/css/styles-theme-strata.css
++++ b/css/styles-theme-strata.css
+@@ -3769,7 +3769,7 @@
+     content: "";
+     position: absolute;
+     inset-block-start: 50%;
+-    inset-inline-start: calc(var(--component-radio-size) / 4);
++    inset-inline-start: calc((var(--component-radio-size) - var(--component-radio-checked-size)) / 2);
+     transform: translateY(-50%) scale(0);
+     width: var(--component-radio-checked-size);
+     height: var(--component-radio-checked-size);
+diff --git a/scss/atoms/_radio.scss b/scss/atoms/_radio.scss
+index 827dd74..0373278 100644
+--- a/scss/atoms/_radio.scss
++++ b/scss/atoms/_radio.scss
+@@ -54,10 +54,12 @@
+         );
+       }
+ 
+-      // Inner dot (hidden by default)
++      // Inner dot (hidden by default). Centrado en el círculo para cualquier
++      // pareja de tamaños: (círculo − punto) / 2. Antes era círculo / 4, que solo
++      // centra si el punto mide la mitad del círculo (24 px y 8 px lo desplazaban 2 px).
+       &::after {
+         content: "";
+-        @include absolute($top: 50%, $left: calc(var(--component-radio-size) / 4));
++        @include absolute($top: 50%, $left: calc((var(--component-radio-size) - var(--component-radio-checked-size)) / 2));
+         transform: translateY(-50%) scale(0);
+         width: var(--component-radio-checked-size);
+         height: var(--component-radio-checked-size);
+-- 
+2.43.0
+
